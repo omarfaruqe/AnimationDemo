@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		423AD5F41CD6D9D100E36E00 /* StatusPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423AD5F31CD6D9D100E36E00 /* StatusPill.swift */; };
 		42E263501CD6B259004131F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2634F1CD6B259004131F0 /* AppDelegate.swift */; };
 		42E263521CD6B259004131F0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E263511CD6B259004131F0 /* ViewController.swift */; };
 		42E263551CD6B259004131F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42E263531CD6B259004131F0 /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		423AD5F31CD6D9D100E36E00 /* StatusPill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusPill.swift; sourceTree = "<group>"; };
 		42E2634C1CD6B259004131F0 /* DatingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DatingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42E2634F1CD6B259004131F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42E263511CD6B259004131F0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				42E263631CD6B49E004131F0 /* Assets */,
 				42E2634F1CD6B259004131F0 /* AppDelegate.swift */,
 				42E263511CD6B259004131F0 /* ViewController.swift */,
+				423AD5F31CD6D9D100E36E00 /* StatusPill.swift */,
 				42E263611CD6B359004131F0 /* ProfileStack.swift */,
 				42E263721CD6B68E004131F0 /* ProfileView.swift */,
 				42E2636E1CD6B597004131F0 /* Assets.swift */,
@@ -172,6 +175,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				423AD5F41CD6D9D100E36E00 /* StatusPill.swift in Sources */,
 				42E263521CD6B259004131F0 /* ViewController.swift in Sources */,
 				42E263621CD6B359004131F0 /* ProfileStack.swift in Sources */,
 				42E263731CD6B68E004131F0 /* ProfileView.swift in Sources */,
@@ -328,6 +332,7 @@
 				42E263601CD6B259004131F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

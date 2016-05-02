@@ -50,6 +50,19 @@ class ProfileStack: UIView{
         }
     }
     
+    func setupGestures(){
+        for profile in profiles {
+            let gestures = profile.gestureRecognizers ?? []
+            for gesture in gestures {
+                profile.removeGestureRecognizer(gesture)
+            }
+        }
+        
+        if let firstProfile = profiles.first {
+            firstProfile.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(ProfileStack.pan(_:))))
+        }
+    }
+    
     func pan(gesture: UIPanGestureRecognizer){
         let profile = gesture.view! as! ProfileView
         
@@ -63,6 +76,24 @@ class ProfileStack: UIView{
                 self.setupTransforms(abs(Double(percent)))
             }, completion: nil)
         
+        
+        if percent > 0.2 {
+            profile.nopeLabel.alpha = 0
+            
+            let newPercent = (percent - 0.2) / 0.8
+            profile.likeLabel.alpha = newPercent
+        }
+        else if percent < -0.2 {
+            profile.likeLabel.alpha = 0
+            
+            let newPercent = (abs(percent) - 0.2) / 0.8
+            profile.nopeLabel.alpha = newPercent
+        }
+        else {
+            profile.likeLabel.alpha = 0
+            profile.nopeLabel.alpha = 0
+        }
+        
         var transform = CGAffineTransformIdentity
         transform = CGAffineTransformTranslate(transform, translation.x, translation.y)
         transform = CGAffineTransformRotate(transform, CGFloat(M_PI) * percent / 30)
@@ -71,15 +102,62 @@ class ProfileStack: UIView{
         
         if gesture.state == .Ended {
             
-            UIView.animateWithDuration(0.75, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 1, options: [], animations: {
-                () -> Void in
-                    profile.transform = CGAffineTransformIdentity
-                }, completion: nil)
+            let velocity = gesture.velocityInView(self)
+            
+            let percentBlock = {
+                self.profiles.removeAtIndex(self.profiles.indexOf(profile)!)
+                self.setupGestures()
+                profile.removeGestureRecognizer(profile.gestureRecognizers![0])
+                
+                let normVelX = velocity.x / translation.x / 10
+                let normVelY = velocity.y / translation.y / 10
+                
+                UIView.animateWithDuration(1.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: normVelX, options: [], animations: {
+                    () -> Void in
+                    profile.center.x = translation.x * 10
+                    }, completion: nil)
+                
+                UIView.animateWithDuration(1.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: normVelY, options: [], animations: {
+                    () -> Void in
+                    profile.center.y = translation.y * 10
+                    }, completion: nil)
+                
+            }
+            
+            if percent > 0.2 {
+                percentBlock()
+            }
+            else if percent < -0.2 {
+                percentBlock()
+            }
+            else{
+                
+                let normVelX = -velocity.x / translation.x
+                let normVelY = -velocity.y / translation.y
+                
+                UIView.animateWithDuration(0.75, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: { () -> Void in
+                    profile.likeLabel.alpha = 0
+                    profile.nopeLabel.alpha = 0
+                    }, completion: nil)
+                
+                UIView.animateWithDuration(0.75, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: normVelX, options: [], animations: {
+                    () -> Void in
+                    var transform = CGAffineTransformIdentity
+                    transform = CGAffineTransformTranslate(transform, 0, translation.y)
+                    profile.transform = transform
+                    }, completion: nil)
+                
+                UIView.animateWithDuration(0.75, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: normVelY, options: [], animations: {
+                    () -> Void in
+                    var transform = CGAffineTransformIdentity
+                    transform = CGAffineTransformTranslate(transform, 0, 0)
+                    profile.transform = transform
+                    }, completion: nil)
+            }
             
             UIView.animateWithDuration(0.75, delay: 0, usingSpringWithDamping: 0.65, initialSpringVelocity: 1, options: [], animations: { () -> Void in
                 self.setupTransforms(0.0)
                 }, completion: nil)
-            
         }
     }
     
